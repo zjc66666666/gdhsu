@@ -1,0 +1,53 @@
+#include<stdio.h>
+
+struct jiangpai
+{
+	char country[10];
+	int jp;
+	int yp;
+	int tp;
+	int all;
+}; 
+typedef struct jiangpai ap;
+int main(void)
+{
+	ap a[8];
+	ap min;
+	char b[5][20];
+	FILE *fp=fopen("e:\\jp.txt","r");
+	if(fp==NULL)
+	{
+		printf("错误");
+		return 0;
+	}
+	for(int i=0;i<9;i++)
+	{
+		if(i==0)
+		{
+			fscanf(fp,"%s %s %s %s %s",&b[0],&b[1],&b[2],&b[3],&b[4]);
+			continue;
+		}
+		fscanf(fp,"%s %d %d %d %d",&a[i-1].country,&a[i-1].jp,&a[i-1].yp,&a[i-1].tp,&a[i-1].all);
+	}
+	fclose(fp);
+	int z=9;
+	for(;z>0;z--)
+	{
+		for(int j=0;j<z;j++)
+	    {
+		       if(a[j].jp>a[j+1].jp)
+		          {
+		          	min=a[j+1];
+		            a[j+1]=a[j];
+		            a[j]=min;
+				  }
+	    }
+	}
+	
+	FILE *ad=fopen("e://file_sorted.txt","w");
+	for(int c=0;c<8;c++)
+	{
+		fprintf(ad,"%s %d %d %d %d\n",a[c].country,a[c].jp,a[c].yp,a[c].tp,a[c].all);
+	}
+	return 0;
+}
